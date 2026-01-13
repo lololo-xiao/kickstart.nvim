@@ -1,5 +1,6 @@
--- TODO: add feat: hightlight the code I selected
--- TODO: add navigator menu
+-- TODO: feat: auto save as vs code
+-- TODO: feat: hightlight the code I selected
+-- TODO: feat: add navigator menu
 --[[
 
 =====================================================================
@@ -219,6 +220,28 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.hl.on_yank()
+  end,
+})
+
+-- GPT-5.2 CodeX: auto-save file buffers on focus/leave
+vim.api.nvim_create_autocmd({ 'FocusLost', 'BufLeave', 'InsertLeave' }, {
+  desc = 'Auto-save file buffers on focus lost or leave',
+  group = vim.api.nvim_create_augroup('kickstart-auto-save', { clear = true }),
+  callback = function(event)
+    local buffer = event.buf
+    if vim.bo[buffer].buftype ~= '' then
+      return
+    end
+    if not vim.bo[buffer].modifiable or vim.bo[buffer].readonly then
+      return
+    end
+    if not vim.bo[buffer].buflisted then
+      return
+    end
+    if not vim.bo[buffer].modified then
+      return
+    end
+    vim.cmd 'silent! write'
   end,
 })
 

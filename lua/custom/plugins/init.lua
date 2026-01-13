@@ -21,10 +21,10 @@ return {
             command = { 'zsh' },
           },
           python = {
-            command = { 'python3' }, -- or { "ipython", "--no-autoindent" }
+            command = { '/Users/wangxiao/miniforge3/envs/kv/bin/python' }, -- or { "ipython", "--no-autoindent" }
             format = common.bracketed_paste_python,
             block_dividers = { '# %%', '#%%' },
-            env = { PYTHON_BASIC_REPL = '1' }, --this is needed for python3.13 and up.
+            -- env = { PYTHON_BASIC_REPL = '1' }, --this is needed for python3.13 and up.
           },
         },
         -- set the file type of the newly created repl to ft
@@ -39,7 +39,7 @@ return {
         dap_integration = true,
         -- How the repl window will be displayed
         -- See below for more information
-        repl_open_cmd = view.bottom(40),
+        repl_open_cmd = view.right(0.4),
 
         -- repl_open_cmd can also be an array-style table so that multiple
         -- repl_open_commands can be given.
