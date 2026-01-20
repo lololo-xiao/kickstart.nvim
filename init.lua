@@ -1,4 +1,4 @@
--- TODO: feat: auto save as vs code
+-- TODO: feat: add remote mode, specify remote ssh path, and sync the files as I change in local
 -- TODO: feat: hightlight the code I selected
 -- TODO: feat: add navigator menu
 --[[
@@ -208,6 +208,20 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
+-- Copy relative path (e.g., src/main.py)
+vim.keymap.set('n', '<leader>cr', function()
+  local path = vim.fn.expand '%' -- 1. Get the path
+  vim.fn.setreg('+', path) -- 2. Copy to clipboard register
+  print('Copied relative path: ' .. path) -- 3. Print message
+end, { desc = 'Copy Relative Path' })
+
+-- Copy absolute path (e.g., /home/user/project/src/main.py)
+vim.keymap.set('n', '<leader>ca', function()
+  local path = vim.fn.expand '%:p' -- 1. Get the full path
+  vim.fn.setreg('+', path) -- 2. Copy to clipboard register
+  print('Copied absolute path: ' .. path) -- 3. Print message
+end, { desc = 'Copy Absolute Path' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -274,7 +288,6 @@ rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
-  'Vigemus/iron.nvim',
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
